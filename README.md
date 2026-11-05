@@ -30,7 +30,7 @@ def test_create_choice():
 
 ...
 ```
-
+ 
 Você deve realizar os 3 commits descritos abaixo e submeter os 3 links dos commits via Moodle.
 
 # Commit 1: Running the tests
