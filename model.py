@@ -34,7 +34,7 @@ class Question:
         self.max_selections = max_selections
 
         self.id = uuid.uuid4().hex
-        self.choices = []
+        self.choices: list[Choice] = []
 
     """
     Adds a choice to the question.
@@ -84,10 +84,15 @@ class Question:
     """
 
     def set_correct_choices(self, correct_choice_ids: list[int]):
-        for choice_id in correct_choice_ids:
-            choice = self._find_choice_by_id(choice_id)
-            if choice:
-                choice.is_correct = True
+        correct_set = set(correct_choice_ids)
+        for choice in self.choices:
+            in_set = choice.id in correct_set
+            choice.is_correct = in_set
+            if in_set:
+                correct_set.remove(choice.id)
+
+        for choice_id in correct_set:
+            raise Exception(f'Invalid choice id {choice_id}')
 
     """
     Corrects the selected choices.
